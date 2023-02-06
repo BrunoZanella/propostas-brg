@@ -1,10 +1,13 @@
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 
   <link rel="shortcut icon" type="imagex/png" href='/static/img/logoBRGi.png'> 
-  <title>PROPOSTA - {{ proposta_base.cliente.nome }} - {{ proposta_base.data|date:"d F Y" }}</title>
+  {% for cliente in clientes %}
+  <title>PROPOSTA - {{ cliente.nome }} - {{ proposta.Ordem}}</title>
+  {% endfor %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
@@ -14,6 +17,54 @@
   <link rel="stylesheet" href="{% static 'css/style-proposta.css' %}">
 </head>
 <body>
+
+<!--  
+    <h1>Proposta</h1>
+    <table>
+      {% for cliente in clientes %}
+      <tr>
+        <th>Cliente</th>
+        <td>{{ cliente.nome }}</td>
+      </tr>
+      {% endfor %}
+      <tr>
+        <th>Valor dos Geradores</th>
+        <td>R$ {{ soma_gera }}</td>
+      </tr>
+      <tr>
+        <th>Valor Frete</th>
+        <td>R$ {{ soma_frete }}</td>
+      </tr>
+      <tr>
+        <th>Valor Instalação</th>
+        <td>R$ {{ soma_instalacao }}</td>
+      </tr>
+      <tr>
+        <th>Valor Total</th>
+        <td>R$ {{ soma_total }}</td>
+      </tr>
+    </table>
+
+    <h2>Produtos</h2>
+    <table>
+      <tr>
+        <th>Nome</th>
+        <th>Quantidade Gerador</th>
+        <th>Valor Gerador</th>
+      </tr>
+      {% for produto in produtos %}
+      <tr>
+        <td>{{ produto.produto }}</td>
+        <td>{{ produto.quantidade_Gerador }}</td>
+        <td>R$ {{ produto.valor_gerador }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+-->
+
+
+
 </div> <!-- botao de enviar inicio.// -->
 <aside class="col-lg-29">
         <div class="card-body">                                                                                   
@@ -27,10 +78,14 @@
   <style>
     body {
       background-image: url("{% static 'img/raioamarelo.png' %}");
-      background-size: 100% 27.3%;
+      background-size: 100% 12.55%;
       background-repeat: repeat;
     }
 </style>
+
+{% for produto in produtos %}
+
+{% for cliente in clientes %}
 
 <div id="geral">
     <div class="container">
@@ -44,52 +99,26 @@
       </div>
 
       <div class="row">
-        <hr>
          <font size="2">
         <div class="informacao-cliente">
-          <p> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp; &ensp; &ensp;&ensp; &ensp; &ensp;&ensp; <font size="3"> <strong>Anápolis,</strong> {{proposta_base.data|date:"d F Y"}}</p>  </font>  
+          <p> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp; &ensp; &ensp;&ensp; &ensp; &ensp;&ensp; <font size="3"> <strong>Anápolis,</strong> {{proposta.data|date:"d F Y"}}</p>  </font>  
           <h5> <br/> </h5>     <!-- espaco entre linhas.// -->
 
           <div class="col-lg-16 col-md-16 col-sm-16">
-            <p> <strong>CLIENTE:</strong> {{ proposta_base.cliente.nome|upper }} &ensp;&ensp;&ensp;&ensp; {% if proposta_base.cliente.cpf %} <strong>CPF:</strong> {{ proposta_base.cliente.cpf }} {% else %} <strong>CNPJ:</strong> {{ proposta_base.cliente.cnpj }}</p> {% endif %}
-            <p> <strong>TELEFONE:</strong> {{ proposta_base.cliente.telefone|upper }} &ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <strong>EMAIL:</strong> {{ proposta_base.cliente.email }}</p>
-            <p>  <strong>ENDEREÇO:</strong> {{ proposta_base.cliente.endereco|upper }}, {{ proposta_base.cliente.bairro|upper }}, {{ proposta_base.cliente.cidade|upper }} - {{ proposta_base.cliente.get_estado_display|upper  }} </p>
-
+            <p> <strong>CLIENTE:</strong> {{ cliente.nome|upper }} &ensp;&ensp;&ensp;&ensp; {% if cliente.cpf %} <strong>CPF:</strong> {{ cliente.cpf }} {% else %} <strong>CNPJ:</strong> {{ cliente.cnpj }}</p> {% endif %}
+            <p> <strong>TELEFONE:</strong> {{ cliente.telefone|upper }} &ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <strong>EMAIL:</strong> {{ cliente.email }}</p>
+            <p>  <strong>ENDEREÇO:</strong> {{ cliente.endereco|upper }}, {{ cliente.bairro|upper }}, {{ cliente.cidade|upper }} - {{ cliente.get_estado_display|upper  }} </p>
           </div>
         </font>
         </div>
       </div>
-      <!--
-          <div class="row">
-            <hr>
-             <font size="2">
-            <div class="informacao-cliente">
-              <p> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp; &ensp; &ensp;&ensp; &ensp; &ensp;&ensp; <font size="3"> <strong>Anápolis,</strong> {{proposta_base.data|date:"d F Y"}}</p>  </font>  
-              <div class="col-lg-6 col-md-6 col-sm-6">
-                <p> <strong>CLIENTE:</strong> {{ proposta_base.cliente.nome|upper }}</p> 
-                {% if proposta_base.cliente.cpf %}
-                  <p> <strong>CPF:</strong> {{ proposta_base.cliente.cpf }}</p>
-                  {% else %}
-                  <p> <strong>CNPJ:</strong> {{ proposta_base.cliente.cnpj }}</p>
-                  {% endif %}
-                  <p> <strong>TELEFONE:</strong> {{ proposta_base.cliente.telefone|upper }}</p>
-                  <p> <strong>EMAIL:</strong> {{ proposta_base.cliente.email }}</p>
-                  <p> <strong>ENDEREÇO:</strong> {{ proposta_base.cliente.endereco|upper }}</p>
-              </div>
-              <div class="col-lg-6 col-md-6 col-sm-6">
-                  <p> <strong>BAIRRO:</strong> {{ proposta_base.cliente.bairro|upper }}</p>
-                  <p> <strong>CIDADE:</strong> {{ proposta_base.cliente.cidade|upper }}</p>
-                  <p> <strong>ESTADO:</strong> {{ proposta_base.cliente.get_estado_display|upper  }}</p>
-              </div>
-            </font>
-            </div>
-          </div>
-        -->
+
         <h5> <br/> </h5>     <!-- espaco entre linhas.// -->
            <div class="col-lg-16 col-md-15 col-sm-16">
-            <font size="3"> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp; &ensp; &ensp;&ensp; &ensp; &ensp;&ensp; <strong>PROPOSTA BRG Nº:</strong> {{proposta_base.Ordem}} {{proposta_base.data|date:"y"}} REV-{{proposta_base.revisão}}</p> </font>
+            <font size="3"> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp; &ensp; &ensp;&ensp; &ensp; &ensp;&ensp; <strong>PROPOSTA BRG Nº:</strong> {{proposta.Ordem}} {{proposta.data|date:"y"}} REV-{{proposta.revisão}}</p> </font>
           </div>
     </div>
+    {% endfor %}
 
     <div class="card-body">
       <p> 
@@ -98,79 +127,89 @@
       </p>
   </div>
 
+
     <div class="container">
       <div class="row"><br>
-<hr> 
 
-<tr>
-  <td>
-      <figure class="itemside align-items-center">
-          <div class="aside">
-          </div>
-              <figcaption class="info">
-                  <p>
-                      <font size="2">
-                        
-                      <b> MODELO  &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp;&ensp;{{proposta_base.produto.produto.Modelo_Gerador|upper}}</b> <br>
-                      <h5>  </h5>     <!-- espaco entre linhas.// -->
+<p class="espaco">
+  <h5> </h5>    
 
-                      Tensão  &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp;&ensp;&ensp;{{  proposta_base.produto.Tensão_Gerador|upper }} <br>
-               
-                      Automático/Manual  &ensp; &ensp; &ensp; &ensp; &ensp; &ensp;&ensp; &ensp;&ensp; {{ proposta_base.produto.aut_man_Gerador|upper }} <br>
-                
-                      Controlador  &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp;{{ proposta_base.produto.Controlador_Gerador|upper}} <br>
-                  
-                      QTA(Quadro de transferência) &ensp; &ensp; &ensp;{{ proposta_base.produto.QTA_Gerador|upper}} <br>
-                                    
-                      Silenciador  &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp;{{ proposta_base.produto.Silenciador_Gerador|upper}} <br>
-                      
-                      Dimensões  &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp;{{ proposta_base.produto.produto.Dimensoes}} <br>
-                      
-                      Peso  &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp; &ensp;{{ proposta_base.produto.produto.Peso}} <br>
+<font size="2">
+        <div class="invoice-items">
+            <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+                <table class="table table-bproposta_baseed">
+                    <thead>
+                        <tr>
+                            <th class="per10 text-left">MODELO</th>
+                            <th class="per5 text-left">{{produto.produto.Modelo_Gerador|upper}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td colspan="1" class="text-left"> Tensão </td>
+                        <td class="text-left"> {{ produto.Tensão_Gerador|upper }} </td>
+                    </tr>
+                    <tr>
+                      <td colspan="1" class="text-left">  Automático/Manual </td>
+                      <td class="text-left"> {{ produto.aut_man_Gerador|upper }} </td>
+                  </tr>
+                  <tr>
+                    <td colspan="1" class="text-left"> Controlador </td>
+                    <td class="text-left"> {{ produto.Controlador_Gerador|upper}} </td>
+                </tr>
+                <tr>
+                  <td colspan="1" class="text-left"> QTA(Quadro de transferência) </td>
+                  <td class="text-left"> {{ produto.QTA_Gerador|upper}} </td>
+              </tr>
+              <tr>
+                <td colspan="1" class="text-left"> Silenciador </td>
+                <td class="text-left"> {{ produto.Silenciador_Gerador|upper}} </td>
+            </tr>
+            {% if produto.produto.Dimensoes%}
+            <tr>
+              <td colspan="1" class="text-left"> Dimensões </td>
+              <td class="text-left"> {{ produto.produto.Dimensoes}} </td>
+          </tr>
+          {% else %}
+          <br/><br/>
+          {% endif %}
+          {% if produto.produto.Peso%}
+          <tr>
+            <td colspan="1" class="text-left"> Peso </td>
+            <td class="text-left"> {{ produto.produto.Peso}} </td>
+        </tr>
+        {% else %}
+          <br/><br/>
+        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+      </p>
+    </font> 
 
-                      <h5> <br/> </h5>     <!-- espaco entre linhas.// -->
-
-                      <div>
-                          <p class="per10 text-center">
-                            <center><img src="{{ proposta_base.produto.imagem.url }}"width=300 height=350></center>
-                          </p>
-                      </div>
-               <!--		<label for=""> {{item.quantity}} unidade</label>  -->
-              </font>  
-                  </p>   
-              </figcaption>
-      </figure>
-  </td>
-<h5> <br/><br/><br/> </h5>     <!-- espaco entre linhas.// -->
+                    <div>
+                        <p class="per10 text-center">
+                          <center><img src="{{ produto.imagem.url }}"width=500 height=350></center>
+                          <center> <font size="3"> <h6 class="col-lg-40"> *Figura Ilustrativa <br/> </h6>  </font> </center>
+                        </p>
+                    </div>
+            </font>  
+                </p>   
+            </figcaption>
+    </figure>
+</td>
 
 <p class="espaco">
   <font size="4"> <font color="#a3dfa0"> <h6 class="col-lg-40"><b> Motor Diesel </b> <br/> </h6> </font> </font>
   <hr/>  <!-- linha de divisao.// -->
   <font size="2">
-      Fabricante <b> {{proposta_base.produto.produto.Fabricante_Motor}} </b>, modelo <b> {{proposta_base.produto.produto.Modelo_Motor}} </b>, refrigeração por radiador
+      Fabricante <b> {{produto.produto.Fabricante_Motor}} </b>, modelo <b> {{produto.produto.Modelo_Motor}} </b>, refrigeração por radiador
        com ventilador no eixo, partida elétrica por motor de
       arranque, alternador para carga de bateria(s), sensores de temperatura da água e pressão do óleo e filtros substituíveis.
   </font>
 </p>
-<!--
-{% if proposta_base.produto.Modelo_Gerador.MODELO_CHOICES == Slim_40_kVA_Carenado_Silenciado%}
-<p class="espaco">
-    <font size="4"> <font color="#a3dfa0"> <h6 class="col-lg-40"><b> Motor Diesel </b> <br/> </h6> </font> </font>
-    <hr/> 
-    <font size="2">
-        Fabricante 40CA, modelo 40CA, refrigeração por radiador com ventilador no eixo, partida elétrica por motor de
-        arranque, alternador para carga de bateria(s), sensores de temperatura da água e pressão do óleo e filtros substituíveis.
-    </font>
-</p>
-{% elif proposta_base.produto.Modelo_Gerador.MODELO_CHOICES == Slim_95_kVA_Carenado_Silenciado%}
-<p class="espaco">
-  <font size="4"> <font color="#a3dfa0"> <h6 class="col-lg-40"><b> Motor Diesel </b> <br/> </h6> </font> </font>
-  <hr/> 
-      Fabricante 55CA, modelo 55CA, refrigeração por radiador com ventilador no eixo, partida elétrica por motor de
-      arranque, alternador para carga de bateria(s), sensores de temperatura da água e pressão do óleo e filtros substituíveis.
-</p>
-{% endif %}
--->
+
   <hr>
 
   <p class="espaco">
@@ -189,7 +228,7 @@
   <font size="4"> <font color="#a3dfa0"> <h6 class="col-lg-40">Painel de Força <br/> </h6> </font> </font>
   <hr/>  <!-- linha de divisao.// -->
   <font size="2">
-  Painel de aço carbono montado na base do grupo gerador, com sistema de controle <b> {{ proposta_base.produto.Controlador_Gerador}} ({{ proposta_base.produto.QTA_Gerador}}) </b>, com 
+  Painel de aço carbono montado na base do grupo gerador, com sistema de controle <b> {{ produto.Controlador_Gerador}} ({{ produto.QTA_Gerador}}) </b>, com 
   controle de partida e parada, proteções do motor e alternador, visor digital indicando as principais grandezas
   mecânicas e elétricas e demais acessórios de montagem. Acessórios de montagem painel elétrico. 
   <h5>  </h5>     <!-- espaco entre linhas.// -->
@@ -206,7 +245,7 @@
       Fabricada em chapas de perfis de aço carbono, com pintura eletrostática a pó em todas as partes metálicas, com resistência
       para instalação ao tempo. Possui isolamento acústico através de lãs de vidro com tecido de véu preto, material que permite
       fácil limpeza. Atenuador(es) de ruídos montado(s) para a correta ventilação do grupo gerador, reduzindo o nível de ruído
-      para <b> {{proposta_base.produto.Nivel_de_ruído }} </b> do Grupo Gerador.
+      para <b> {{produto.Nivel_de_ruído }} </b> do Grupo Gerador.
     </font> 
 </p>
 
@@ -218,19 +257,19 @@
  <hr/>  <!-- linha de divisao.// -->
  <font size="2">
  * Base resistente em aço carbono dobrada em vigas U enrijecido. <br/>
- * Içamento {{proposta_base.produto.produto.Içamento}}<br/>    <!--   Duplo içamento  -->
+ * Içamento {{produto.produto.Içamento}}<br/>    <!--   Duplo içamento  -->
  * Abastecimento externo <br/>  <!--   Abastecimento externo  -->
  * Painel Incorporado a carenagem <br/>
  * Acesso externo para painel de potência e controle, com fácil conexão de cabos. <br/>
  * Coxins intermediários para assegurar o isolamento de vibração. <br/>
  * Acoplamento do motor com o gerador tipo acoplamento elástico. <br/>
- * Tanque de {{proposta_base.produto.produto.Tanque_de_combustivel}} <br/>    <!--  litros   -->
+ * Tanque de {{produto.produto.Tanque_de_combustivel}} <br/>    <!--  litros   -->
  * Bandeja de contenção para combustível, líquido de arrefecimento e óleo do motor <br/>
  * Pré filtro de combustível com separador de água <br/>
- * {{ proposta_base.produto.Silenciador_Gerador}} <br/>  <!-- Silenciador de ruídos hospitalar  -->
+ * {{ produto.Silenciador_Gerador}} <br/>  <!-- Silenciador de ruídos hospitalar  -->
 </font> 
 </p>
-<h5> <br/><br/><br/><br/><br/> </h5>     <!-- espaco entre linhas.// -->
+<h5> <br/><br/><br/><br/><br/><br/><br/> </h5>     <!-- espaco entre linhas.// -->
 
 <p class="espaco">
 
@@ -278,57 +317,63 @@ limite de até 200 horas. </blockquote>
                         </tr>
                     </thead>
                     <tbody>
+                      {% for produto in produtos %}
                         <tr>
-                            <td>{{item.product.product_name}}
+                            <td>
                               <p class="text-muted small">
                                                     GERADOR, Marca BRG GERADORES, <br/>
-                                                    modelo {{ proposta_base.produto.produto.Modelo_Gerador|default_if_none:" "}}  <br>
+                                                    modelo {{ produto.produto.Modelo_Gerador|default_if_none:" "}}  <br>
                                       </p>
                             </td>
-                            <td class="text-center">{{proposta_base.produto.quantidade_Gerador}}</td>
-                            <td class="text-center">R$ {{proposta_base.produto.valor_gerador}} </td>
-                            <td class="text-center">R$ {{proposta_base.produto.soma_gerador}} </td>
-                            
+                            <td class="text-center">{{produto.quantidade_Gerador}}</td>
+                            <td class="text-center">R$ {{produto.valor_gerador}} </td>
+                            <td class="text-center">R$ {{produto.soma_gerador}} </td>
+
                     <!--        <td class="text-center">R$ {{item.product_price}} </td>     -->
                         </tr>
+                        {% endfor %}
+
                     </tbody>
                     <tfoot>
                         <tr> 
-                          {% if proposta_base.INSTALAÇÃO%}
+                          {% if proposta.INSTALAÇÃO%}
                             <td colspan="1" class="text-muted small">INSTALAÇÃO E START UP</td>
-                                <td class="text-center">{{proposta_base.produto.quantidade_Gerador}}</td>
-                                  <td class="text-center">R$ {{proposta_base.Valor_Instalação}}</td>
-                                    <td class="text-center">R$ {{proposta_base.Valor_Instalação}}</td>
+                                <td class="text-center">{{produto.quantidade_Gerador}}</td>
+                                  <td class="text-center">R$ {{proposta.Valor_Instalação}}</td>
+                                    <td class="text-center">R$ {{proposta.Valor_Instalação}}</td>
                                     {% endif %}
                                     </tr>
 <!--
                         <tr>
                             <th colspan="1" class="text-right">PREÇO PARCIAL:</th>
-                            <td class="text-center">{{itproposta_base.quantidade_Gerador}}</th>
+                            <td class="text-center">{{itproposta.quantidade_Gerador}}</th>
                             <th class="text-center">R$ {{subtotal}}</th>
                         </tr>
                       -->
                         <tr>
-                          {% if proposta_base.CIF%}
+                          {% if proposta.CIF%}
                             <td colspan="1" class="text-muted small">FRETE:</td>
-                            <td class="text-center">{{proposta_base.produto.quantidade_Gerador}}</td>
-                              <td class="text-center">R$ {{proposta_base.Frete}}</td>
-                              <td class="text-center">R$ {{proposta_base.Frete}}</td>
+                            <td class="text-center">{{produto.quantidade_Gerador}}</td>
+                              <td class="text-center">R$ {{proposta.Frete}}</td>
+                              <td class="text-center">R$ {{proposta.Frete}}</td>
                           {% endif %}
                         </tr>
                         <tr>
                             <td class="text-right"> </th>
                             <th colspan="1" class="text-right">  </th>
                             <th class="text-center"> PREÇO TOTAL: </th>
-                          {% if proposta_base.CIF%}
-                            <th class="text-center">R$ {{proposta_base.soma_Total}} </th>
-                            {% elif proposta_base.INSTALAÇÃO%}
-                            <th class="text-center">R$ {{proposta_base.soma_instalacao}} </th>
-                          {% else %}
-                            <th class="text-center">R$ {{proposta_base.produto.soma_gerador}} </th>
-                            {% endif %}
-                            
 
+                          {% if proposta.CIF and proposta.INSTALAÇÃO%}
+                          <th class="text-center">R$ {{soma_total}} </th>
+
+                          {% elif proposta.CIF%}
+                            <th class="text-center">R$ {{soma_frete}} </th>
+
+                          {% elif proposta.INSTALAÇÃO%}
+                            <th class="text-center">R$ {{soma_instalacao}} </th>
+                          {% else %}
+                            <th class="text-center">R$ {{soma_gera}} </th>
+                            {% endif %}                            
                         </tr>
                     </tfoot>
                 </table>
@@ -345,30 +390,29 @@ limite de até 200 horas. </blockquote>
       &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp;&ensp;&ensp;ICMS: 17% para Goiás e 12 % demais estados <br/>
       &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp;&ensp;&ensp;PIS/COFINS: 9,25 % <br/>
       &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp;&ensp;&ensp;&ensp;IPI – 0% (Isento, conforme Decreto nº 5.468, de 15 de junho de 2005) <br/> <br/>
-      <b>- CONDIÇÕES PAGAMENTO</b> &ensp;&ensp;&ensp;&ensp;&ensp; <td class="text-center"> {{proposta_base.Condições_de_Pagamento}}   </th> <br/> <br/>
-        {% if proposta_base.CIF%}
-      <b>- LOCAL DE ENTREGA</b> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; {{proposta_base.cliente.endereco}}, {{proposta_base.cliente.cidade}}, {{proposta_base.cliente.estado}}<br/> <br/>
+      <b>- CONDIÇÕES PAGAMENTO</b> &ensp;&ensp;&ensp;&ensp;&ensp; <td class="text-center"> {{proposta.Condições_de_Pagamento}}   </th> <br/> <br/>
+        {% if proposta.CIF%}
+      <b>- LOCAL DE ENTREGA</b> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; {{proposta.cliente.endereco}}, {{proposta.cliente.cidade}}, {{proposta.cliente.estado}}<br/> <br/>
       {% endif %}
-      <!--    <b>- PRAZO DE ENTREGA</b> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <b>{{proposta_base.get_Prazo_de_Entrega_display}}</b> dias a partir da assinatura do contrato de compra e venda (a confirmar na data de fechamento da compra) <br/> 
+      <!--    <b>- PRAZO DE ENTREGA</b> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <b>{{proposta.get_Prazo_de_Entrega_display}}</b> dias a partir da assinatura do contrato de compra e venda (a confirmar na data de fechamento da compra) <br/> 
   -->
-  <b>- PRAZO DE ENTREGA</b> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <b>{{proposta_base.get_Prazo_de_Entrega_display}}</b> a partir da assinatura do contrato de compra e venda (a confirmar no fechamento da compra) <br/> <br/> 
-  {% if proposta_base.CIF%}
+  <b>- PRAZO DE ENTREGA</b> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <b>{{proposta.get_Prazo_de_Entrega_display}}</b> a partir da assinatura do contrato de compra e venda (a confirmar no fechamento da compra) <br/> <br/> 
+  {% if proposta.CIF%}
   <b>- CONDIÇÕES DE ENTREGA</b> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <b>CIF</b><br/>  <br/>
   {% else %}
   <b>- CONDIÇÕES DE ENTREGA</b> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <b>FOB</b><br/>  <br/>
   {% endif %}
-  <b>- VALIDADE DA PROPOSTA</b> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <b>{{proposta_base.get_validade_display}}</b><br/> 
 </p>
 </font> 
 
-<h5> <br/><br/><br/><br/><br/><br/><br/><br/> </h5>     <!-- espaco entre linhas.// -->
+<h5> <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/> </h5>     <!-- espaco entre linhas.// -->
 
 <p class="espaco">
-<!--
+
   <font size="2.5">
-<h6 class="col-lg-40"> - VALIDADE DA PROPOSTA &ensp;&ensp;&ensp; {{proposta_base.get_validade_display}} <br/> </h6>
+<h6 class="col-lg-40"> - VALIDADE DA PROPOSTA &ensp;&ensp;&ensp; {{proposta.get_validade_display}} <br/> </h6>
 </font> 
--->
+
 <font size="2">
  
 Os preços e condições apresentadas nesta proposta foram elaborados considerando a política de comercialização da
@@ -417,102 +461,28 @@ Representante Legal da Empresa ou Procurador <br/>
 </p>
 </font> 
 
-<!--
-<p class="espaco">
-{% for item_da_proposta in proposta_base.pagamento_set.all %}
 
-- <b>R$</b> {{item_da_proposta.valor}} <b>( {{item_da_proposta.valor_extenso|capfirst|upper}} )</b>, {{item_da_proposta.descricao|capfirst}}.<br>
- {% endfor %}
-</p>
-<hr>
-<strong>VI - DA RESCISÃO DO CONTRATUAL</strong><br>
-
-O presente contrato poderá ser rescindido pelo CONTRATANTE, sem ônus algum, quando:<br>
-- A CONTRATADA não executar os serviços solicitados pelo CONTRATANTE, e que estejam de acordo com as cláusulas deste contrato.<br>
-
-- Quando a CONTRATADA descumprir alguma das cláusulas deste contrato.
- O presente contrato poderá ser rescindido pela CONTRATADA, quando:<br>
- 
-- O CONTRATANTE na hipótese de inadimplência das obrigações ora assumidas, devendo a parte inocente notificar a parte culpada à sanar sua falha no prazo de 30 dias, após isso, não sanada a dívida, a CONTRATADA não efetuará qualquer tipo de trabalho para o CONTRATANTE.<br>
- <hr>
-<strong>VII - PRAZO DE VIGÊNCIA DO PRESENTE CONTRATO</strong><br>
-
-Com exceção dos serviços de implantação do sistema o presente contrato vigorará por prazo determinado de 1 (um) ano, podendo ser renovado posteriormente.
- 
-E, por assim estarem justos e contratados, firmam o presente contrato em duas vias de igual teor e forma.<br>
-<hr>
-<strong>VIII – DADOS DO SITE E ADMINISTRAÇÃO</strong><br> 
-
-  Para acesso a administração do site segue a baixo o site, loguin e senha.<br>
-
-<b>DOMINIO:</b> www.{{proposta_base.dominio}}<br>
-<b>DOMINIO ADMIN:</b> www.{{proposta_base.dominio}}/{{proposta_base.dominio_loguin}}<br>
-<b>LOGUIN:</b> {{proposta_base.loguin}}<br>
-<b>SENHA:</b> {{proposta_base.senha}}<br>
-<b>BANCO DE DADOS:</b> {{proposta_base.loguin}}<br>
-<b>SERVIDOR:</b> Wings Design – DigitalOcean USA<br><br>
-
-<i>Obs. a senha informada para cada um dos itens acima pode ser modificada, por qualquer outra senha.</i><br>
-<hr>
-<strong>IX – SERVIÇOS DE EMAIL’S</strong><br>
-
-<b>EMAIL:</b> email.{{proposta_base.dominio}}<br>
-<b>USUÁRIO ADMIN:</b> contato@{{proposta_base.dominio}}<br>
-<b>SENHA ADMIN:</b> @{{proposta_base.senha}}<br><br>
-
-<i>Obs. a senha informada para cada um dos itens acima pode ser modificada, por qualquer outra senha.</i><br><br>
-
-Poderão ser criadas até 10(dez) contas de E-mails capacidade de 5GB de armazenamentos. As criações de e-mails podem ser feitas através do e-mail principal 
-<b>contato@{{proposta_base.dominio}}</b> 
-Onde o Administrador pode adicionar, remover, bloquear, editar e excluir.<br>
-
-<hr>
-<strong><i>Nota: À Wings Design, tem total Sigilo com dados do seu cliente, se de fato o cliente, esquecer a senha, ou loguin. Você pode entrar em contato conosco, através de telefone ou E-mail.
-À Wings Design, também dá treinamento para que o cliente mesmo possa está atualizando seu próprio Website.</i></strong> 
-<br>
-<hr>
-<div class="validade"><i></i>Proposta válida por {{ proposta_base.get_validade_display }} dias</div><br> 
-
-<div class="infor-data">IMPERATRIZ - MA - {{ proposta_base.data|date|upper }}</div></b><br>
-
-<div class="separador text-center">
-_________________________________________ <br> 
-WINGS DESIGN LTDA <br> 
-<p>CNPJ: 00.000.000/0000-00</p>
-
-
-_________________________________________<br> 
-{{proposta_base.cliente.nome}}<br> 
-{% if proposta_base.cpf %}
-  <p>CPF: {{ proposta_base.cpf }}</p>
-{% else %}
-  <p>CNPJ: {{ proposta_base.cnpj }}</p>
-{% endif %}
-
-      </div>
-</div>
-    </div>
-
-  -->
 </div>
 </div>
 
 </body>
 
+<h5> <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/> </h5>     <!-- espaco entre linhas.// -->
 
+{% endfor %}
 
 <script>
   function CriaPDF() {
       var minhaTabela = document.getElementById('tabela').innerHTML;
       var style = "<style>";
       style = style + "table {width: 90%;font: 15px Arial;}";
-      style = style + "table, th, td {border: solid 1px #DDD; border-collapse: collapse;";
-      style = style + "padding: 3px 3px;text-align: center;}";
+      style = style + "table, th, td {border: solid 0px #DDD; border-collapse: collapse;";
+      style = style + "padding: 3px 3px;text-align: left;}";
       style = style + "</style>";
       // CRIA UM OBJETO WINDOW
-      var win = window.open('', '', 'height=1000,width=1000');
+      var win = window.open('.', '.', 'height=1000,width=1000');
       win.document.write('<html><head>');
-      win.document.write('<title>Proposta de {{ proposta_base.cliente.nome}}</title>');   // <title> CABEÇALHO DO PDF.
+ //     win.document.write('<title>Proposta de {{ proposta_base.cliente.nome}}</title>');   // <title> CABEÇALHO DO PDF.
       win.document.write(style);                                     // INCLUI UM ESTILO NA TAB HEAD
       win.document.write('</head>');
       win.document.write('<body>');	
@@ -523,68 +493,5 @@ _________________________________________<br>
   }
 
 </script>
-<!--
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<div class="form-group col-sm-4">
-  <label id="lb-shift">produto</label>
-  <select id="p-shift" class="form-control">
-    <option selected disabled>Selecione</option>
-    <option value="40CA">{{ proposta_base.produto.Modelo_Gerador}}</option>
-    <option value="55CA">{{ proposta_base.produto.Modelo_Gerador}}</option>
-    <option value="60CA">{{ proposta_base.produto.Modelo_Gerador}}</option>
-    <option value="63CA">{{ proposta_base.produto.Modelo_Gerador}}</option>
-    <option value="75CA">{{ proposta_base.produto.Modelo_Gerador}}</option>
-    <option value="95CA">{{ proposta_base.produto.Modelo_Gerador}}</option>
-   </select>
-</div>
 
-
-<div class="form-group col-sm-4">
-  <label id="lb-shift">resultado</label>
-  <text id="t-shift" >
-    <option selected disabled>Selecione</option>
-    <option data-course="40CA" value="40CA">1103A-33G</option>
-    <option data-course="40CA" value="40CA">Perkins</option>
-
-    <option data-course="55CA" value="55CA">1104A-44G</option>
-    <option data-course="55CA" value="55CA">Perkins</option>
-
-    <option data-course="60CA" value="60CA">1103A-33TG1</option>
-    <option data-course="60CA" value="60CA">Perkins</option>
-
-    <option data-course="63CA" value="63CA">NEF45AM1</option>
-    <option data-course="63CA" value="63CA">FPT</option>
-
-    <option data-course="75CA" value="75CA">N45-SM1</option>
-    <option data-course="75CA" value="75CA">FPT</option>
-
-    <option data-course="95CA" value="95CA">1103A-33TG2</option>
-    <option data-course="95CA" value="95CA">Perkins</option>
-  </text>
-</div>
-
-<script>
-
-$(function () {
-
-  // Oculta as opções do segundo select:
-  $("#t-shift option").hide();
-  
-  // Observa o evento change do primeiro select:
-  $("#p-shift").on("change", function () {
-  
-    // Recupera o valor selecionado:
-    let course = $("#p-shift").val();
-    
-    // Oculta as opções atuais:
-    $("#t-shift option").hide();
-    
-    // Exibe as opções conforme a seleção:
-    $("#t-shift option[data-course="+ course +"]").show();
-  
-  });
-
-});
-</script>
--->
 </html>
