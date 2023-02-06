@@ -173,6 +173,7 @@ class Motor(models.Model):
 	Tanque_de_combustivel = models.CharField(u'Tanque de combustivel', max_length=100)
 	Dimensoes = models.CharField(u'Dimensões',blank=True, max_length=100)
 	Peso = models.CharField(u'Peso',blank=True, max_length=100)
+#	valor_gerador = models.DecimalField(max_digits=15, decimal_places=2)
 
 	class Meta:
 		verbose_name = u'Motor'
@@ -183,8 +184,8 @@ class Motor(models.Model):
 
 class Produto(models.Model):
 
-#	proposta = models.ForeignKey("Proposta", on_delete=models.CASCADE)
-#	cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+	proposta = models.ForeignKey("Proposta", on_delete=models.CASCADE)
+#	cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, related_name='produto_proposta')
 	produto = models.ForeignKey(Motor, on_delete=models.CASCADE)
 	imagem = models.ImageField(upload_to='produtos', default= '/produtos/gerador.png')
  
@@ -254,12 +255,12 @@ class Produto(models.Model):
 
 	def __str__(self):
 	    return self.produto.Modelo_Gerador
-	
+ 	
 class Proposta(models.Model):
 	cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
 	Ordem = models.CharField(u'Número da proposta',max_length=20, unique=True)
 	revisão = models.CharField(u'Revisão',max_length=20, default='001')
-	produto = models.ForeignKey('Produto', on_delete=models.CASCADE)
+#	produto = models.ForeignKey('Produto', on_delete=models.CASCADE, related_name='proposta_produto')
 #	Motor = models.ForeignKey(Motor, on_delete=models.CASCADE)
 	data = models.DateTimeField(auto_now_add=True ) # hora que fez a proposta
 
@@ -361,20 +362,25 @@ class Proposta(models.Model):
 
 	Valor_Instalação = models.DecimalField(blank=True, max_digits=15, decimal_places=2, default='0.00')
 #	Total = models.DecimalField(max_digits=15, decimal_places=2)
-
-	def soma_Total(self):
-#		return self.Frete+self.Valor_Instalação
-		return self.Frete+self.Valor_Instalação+self.produto.valor_gerador*self.produto.quantidade_Gerador
-	soma_Total.description = 'Total'
+# 
+#	@property
+#	def soma_Total(self):
+#		from .models import Produto
+#		return self.Frete+self.Valor_Instalação+self.produto.valor_gerador*self.produto.quantidade_Gerador
+    
+#	def soma_Total(self):
+#		return self.Frete+self.Valor_Instalação+self.produto.valor_gerador*self.produto.quantidade_Gerador
+#	soma_Total.description = 'Total'
       
-	def soma_instalacao(self):
+#	def soma_instalacao(self):
 #		return self.Frete+self.Valor_Instalação
-		return self.Valor_Instalação+self.produto.valor_gerador*self.produto.quantidade_Gerador
-	soma_instalacao.description = 'soma_instalacao'
+#		return self.Valor_Instalação+self.produto.valor_gerador*self.produto.quantidade_Gerador
+#	soma_instalacao.description = 'soma_instalacao'
  
 	def imprimir(self):
 		return mark_safe("""<a href=\"/proposta/%s/\" target="_blank"><img src=\"/static/images/b_print.png\"></a>""" % self.id)
 
+    
 	class Meta:
 		ordering = ['-data']
 		verbose_name = u'Proposta'
