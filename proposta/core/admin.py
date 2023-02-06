@@ -6,6 +6,10 @@ from django.utils.html import format_html
 from django.contrib.admin.views.main import ChangeList
 from django.db.models import Sum, Avg
 
+from django.contrib.auth.models import User
+
+ 
+
 class TotalChangeList(ChangeList):
 	fields_to_total = ['valor',]
 
@@ -34,7 +38,7 @@ class PropostaAdmin(admin.ModelAdmin):
 	def get_changelist(self, request, **kwargs):
 		return TotalChangeList
 
-#	inlines = [ProdutoInline,]
+	inlines = [ProdutoInline,]
 	list_display = ['cliente', 'Ordem', 'data', 'imprimir']
 	search_fields = ['cliente__nome']
 	list_filter = ['cliente__nome', 'data', 'Ordem']
@@ -61,13 +65,6 @@ class PropostaAdmin(admin.ModelAdmin):
 class ProdutoAdmin(admin.ModelAdmin):
     pass
 
-class ClienteAdmin(admin.ModelAdmin):
-	list_display = ['nome', 'cnpj',  'estado']
- 
-class ClienteAdmin(admin.ModelAdmin):
-	list_display = ['nome', 'cnpj',  'estado']
- 
-admin.site.register(Cliente, ClienteAdmin)
 admin.site.register(Motor, MotorAdmin)
 admin.site.register(Proposta, PropostaAdmin)
 admin.site.register(Produto, ProdutoAdmin)
